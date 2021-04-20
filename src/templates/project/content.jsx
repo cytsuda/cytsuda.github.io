@@ -10,6 +10,8 @@ const Grid = styled(Box)`
   grid-gap: ${(props) => props.theme.space[4]}px;
 `;
 
+
+
 const ProjectContent = () => (
   <Box my={4}>
     <Grid>
