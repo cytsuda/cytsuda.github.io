@@ -1,9 +1,17 @@
-*,
-*::after,
-*::before {
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;700&family=Playfair+Display:ital@1&display=swap');
+
+*, *::after, *::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
+}
+:root{
+  font-size: 62.5%;
+}
+
+body{
+  font-size: 1.6rem;
 }
 
 body::-webkit-scrollbar {
@@ -17,3 +25,14 @@ body::-webkit-scrollbar-thumb {
   border-radius: 12px;
   background-color: darkgrey;
 }
+
+h1, h2, h3, h4, h5, h6, p, span {
+  font-size: 1.6rem;
+}
+
+/*
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Merriweather', serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Playfair Display', serif;
+*/
