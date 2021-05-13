@@ -193,6 +193,7 @@ const IconWrapper = styled(IconStyle)`
 
 const Formulario = (props) => {
   const [submit, setSubmit] = useState({ type: "", msg: "" });
+  const [testing, setTesting] = useState("");
   const { form } = props;
   return (
     <Formik
@@ -218,11 +219,12 @@ const Formulario = (props) => {
         return errors;
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        fetch("/.netlify/functions/mensagem", {
-          method: "post",
-          body: JSON.stringify(values),
-        }).then(
-          (resposta) => {
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: encode({ "form-name": "contato", ...values }),
+        })
+          .then((resposta) => {
             resetForm(form);
             if (resposta.status !== 200) {
               setSubmit({
@@ -236,8 +238,8 @@ const Formulario = (props) => {
                 msg: resposta,
               });
             }
-          },
-          (error) => {
+          })
+          .catch((error) => {
             resetForm(form);
             setSubmit({
               type: "falha",
@@ -245,12 +247,13 @@ const Formulario = (props) => {
             });
             console.log("Error");
             console.log(error);
-          }
-        );
+          });
       }}
     >
       {({ isSubmitting, errors, touched }) => (
-        <Container>
+        <Container data-netlify="true" name="contato" method="post">
+          <input type="hidden" name="form-name" value="contato" />
+          <h1>Testing: {` > ` + testing + ` < `} </h1>
           <Alert
             variant="info"
             setClose={() => setSubmit({ type: "", msg: "" })}
@@ -351,3 +354,9 @@ const Formulario = (props) => {
 };
 
 export default Formulario;
+
+function encode(data) {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+}
