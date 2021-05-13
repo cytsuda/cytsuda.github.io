@@ -196,6 +196,7 @@ const Formulario = (props) => {
   const { form } = props;
   return (
     <Formik
+      initialValues={form}
       validate={(values) => {
         const errors = {};
         if (!values.nome) {
@@ -216,9 +217,40 @@ const Formulario = (props) => {
         }
         return errors;
       }}
+      onSubmit={(values, { setSubmitting, resetForm }) => {
+        fetch("http://localhost:8888/.netlify/functions/mensagem", {
+          method: "post",
+          body: JSON.stringify(values),
+        }).then(
+          (resposta) => {
+            resetForm(form);
+            if (resposta.status !== 200) {
+              setSubmit({
+                type: "falha",
+                msg: resposta,
+              });
+              console.log(resposta);
+            } else {
+              setSubmit({
+                type: "sucesso",
+                msg: resposta,
+              });
+            }
+          },
+          (error) => {
+            resetForm(form);
+            setSubmit({
+              type: "falha",
+              msg: error,
+            });
+            console.log("Error");
+            console.log(error);
+          }
+        );
+      }}
     >
       {({ isSubmitting, errors, touched }) => (
-        <Container data-netlify="true" name="contato" method="POST">
+        <Container>
           <Alert
             variant="info"
             setClose={() => setSubmit({ type: "", msg: "" })}
