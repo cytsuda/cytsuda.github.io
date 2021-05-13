@@ -195,61 +195,66 @@ const Formulario = (props) => {
   const [submit, setSubmit] = useState({ type: "", msg: "" });
   const { form } = props;
   return (
-    <Formik onSubmit={() => console.log("Testing")}>
+    <Formik
+      initialValues={form}
+      validate={(values) => {
+        const errors = {};
+        if (!values.nome) {
+          errors.nome = "Obrigatório";
+        }
+        if (!values.email) {
+          errors.email = "Obrigatório";
+        } else if (
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+        ) {
+          errors.email = "Email inválido";
+        }
+        if (!values.assunto) {
+          errors.assunto = "Obrigatório";
+        }
+        if (!values.mensagem) {
+          errors.mensagem = "Obrigatório";
+        }
+        return errors;
+      }}
+      onSubmit={(values, { setSubmitting, resetForm }) => {
+        fetch("/.netlify/functions/form-handler", {
+          method: "post",
+          body: JSON.stringify({ values }),
+        }).then(
+          (resposta) => {
+            resetForm(form);
+            if (resposta.status !== 200) {
+              setSubmit({
+                type: "falha",
+                msg: resposta,
+              });
+              console.log(resposta);
+            } else {
+              setSubmit({
+                type: "sucesso",
+                msg: resposta,
+              });
+            }
+          },
+          (error) => {
+            resetForm(form);
+            setSubmit({
+              type: "falha",
+              msg: error,
+            });
+            console.log("Error");
+            console.log(error);
+          }
+        );
+      }}
+    >
       {({ isSubmitting, errors, touched }) => (
         <Container
           data-netlify="true"
           name="contato"
           method="POST"
           action="/.netlify/functions/form-handler"
-          initialValues={form}
-          validate={(values) => {
-            const errors = {};
-            if (!values.nome) {
-              errors.nome = "Obrigatório";
-            }
-            if (!values.email) {
-              errors.email = "Obrigatório";
-            } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-            ) {
-              errors.email = "Email inválido";
-            }
-            if (!values.assunto) {
-              errors.assunto = "Obrigatório";
-            }
-            if (!values.mensagem) {
-              errors.mensagem = "Obrigatório";
-            }
-            return errors;
-          }}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
-            fetch("/.netlify/functions/form-handler", {
-              method: "post",
-              body: JSON.stringify({ values }),
-            })
-              .then(
-                (resposta) => {
-                  resetForm(form);
-                  setSubmit({
-                    type: "sucesso",
-                    msg: resposta,
-                  });
-                },
-                (error) => {
-                  resetForm(form);
-                  setSubmit({
-                    type: "falha",
-                    msg: error,
-                  });
-                  console.log("Error");
-                  console.log(error);
-                }
-              )
-              .then((data) => {
-                console.log(data);
-              });
-          }}
         >
           <Alert
             variant="info"
@@ -313,6 +318,7 @@ const Formulario = (props) => {
             />
             <ErrorMsg name="mensagem" component="div" />
           </InputWraper>
+
           <Bottom>
             <Button
               outline
@@ -335,7 +341,7 @@ const Formulario = (props) => {
               submitting={isSubmitting}
             >
               {isSubmitting ? (
-                <IconWrapper Icon={CgSpinnerTwo} spinner={true} />
+                <IconWrapper Icon={CgSpinnerTwo} spinner={1} />
               ) : (
                 "Enviar"
               )}
