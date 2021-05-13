@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { rgba } from "polished";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { SiteClient } from "datocms-client";
+
+import Alert from "@components/Alert";
 
 import { CgSpinnerTwo } from "@react-icons/all-files/cg/CgSpinnerTwo";
 import { CgBlock } from "@react-icons/all-files/cg/CgBlock";
 import { IoMdCheckmarkCircleOutline } from "@react-icons/all-files/io/IoMdCheckmarkCircleOutline";
 import { IoMdAlert } from "@react-icons/all-files/io/IoMdAlert";
-
-import Alert from "@components/Alert";
-
-const client = new SiteClient(process.env.DATO_API_TOKEN);
 
 const Container = styled(Form)`
   padding: ${(props) => props.theme.space[4]}px;
@@ -198,167 +195,156 @@ const Formulario = (props) => {
   const [submit, setSubmit] = useState({ type: "", msg: "" });
   const { form } = props;
   return (
-    <>
-      <Formik
-        initialValues={form}
-        validate={(values) => {
-          const errors = {};
-          if (!values.nome) {
-            errors.nome = "Obrigatório";
-          }
-          if (!values.email) {
-            errors.email = "Obrigatório";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-          ) {
-            errors.email = "Email inválido";
-          }
-          if (!values.assunto) {
-            errors.assunto = "Obrigatório";
-          }
-          if (!values.mensagem) {
-            errors.mensagem = "Obrigatório";
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          client.items
-            .create({
-              itemType: "782503",
-              nome: values.nome,
-              email: values.email,
-              assunto: values.assunto,
-              mensagem: values.mensagem,
+    <Formik onSubmit={() => console.log("Testing")}>
+      {({ isSubmitting, errors, touched }) => (
+        <Container
+          data-netlify="true"
+          name="contato"
+          method="POST"
+          action="/.netlify/functions/form-handler"
+          initialValues={form}
+          validate={(values) => {
+            const errors = {};
+            if (!values.nome) {
+              errors.nome = "Obrigatório";
+            }
+            if (!values.email) {
+              errors.email = "Obrigatório";
+            } else if (
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+            ) {
+              errors.email = "Email inválido";
+            }
+            if (!values.assunto) {
+              errors.assunto = "Obrigatório";
+            }
+            if (!values.mensagem) {
+              errors.mensagem = "Obrigatório";
+            }
+            return errors;
+          }}
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            fetch("/.netlify/functions/form-handler", {
+              method: "post",
+              body: JSON.stringify({ values }),
             })
-            .then(
-              (resposta) => {
-                resetForm(form);
-                setSubmit({
-                  type: "sucesso",
-                  msg: "",
-                });
-              },
-              (error) => {
-                resetForm(form);
-                setSubmit({
-                  type: "falha",
-                  msg: error,
-                });
-                console.log("Error");
-                console.log(error);
-              }
-            );
-        }}
-      >
-        {({ isSubmitting, errors, touched }) => (
-          <Container>
-            <Alert
-              variant="info"
-              setClose={() => setSubmit({ type: "", msg: "" })}
-              open={submit.type !== "" && submit.type === "sucesso"}
-            >
-              <IconWrapper Icon={IoMdCheckmarkCircleOutline} />
-              <span>Mensagem enviada com sucesso.</span>
-            </Alert>
-            <Alert
-              variant="danger"
-              setClose={() => setSubmit({ type: "", msg: "" })}
-              open={submit.type !== "" && submit.type === "falha"}
-            >
-              <IconWrapper Icon={IoMdAlert} />
-              <span>Algo deu errado</span>
-            </Alert>
-            <InputWraper error={errors.nome && touched.nome}>
-              <Label htmlFor="nome">Nome</Label>
-              <Input
-                type="text"
-                name="nome"
-                id="nome"
-                disabled={isSubmitting}
-                placeholder="Nome"
-              />
-              <ErrorMsg name="nome" component="div" />
-            </InputWraper>
-            <InputWraper error={errors.email && touched.email}>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                type="email"
-                name="email"
-                id="email"
-                disabled={isSubmitting}
-                placeholder="Email"
-              />
-              <ErrorMsg name="email" component="div" />
-            </InputWraper>
-            <InputWraper error={errors.assunto && touched.assunto}>
-              <Label htmlFor="assunto">Assunto</Label>
-              <Input
-                type="text"
-                name="assunto"
-                id="assunto"
-                disabled={isSubmitting}
-                placeholder="Assunto"
-              />
-              <ErrorMsg name="assunto" component="div" />
-            </InputWraper>
-            <InputWraper error={errors.mensagem && touched.mensagem}>
-              <Label htmlFor="mensagem">Mensagem</Label>
-              <Input
-                component="textarea"
-                type="textarea"
-                name="mensagem"
-                id="mensagem"
-                disabled={isSubmitting}
-                placeholder="Mensagem"
-                rows="6"
-              />
-              <ErrorMsg name="mensagem" component="div" />
-            </InputWraper>
-
-            <Bottom>
-              <Button
-                outline
-                type="reset"
-                disabled={isSubmitting}
-                submitting={isSubmitting}
-              >
-                {isSubmitting && <IconWrapper Icon={CgBlock} />} Limpar
-              </Button>
-              <Button
-                type="submit"
-                disabled={
-                  isSubmitting ||
-                  !(
-                    errors &&
-                    Object.keys(errors).length === 0 &&
-                    errors.constructor === Object
-                  )
+              .then(
+                (resposta) => {
+                  resetForm(form);
+                  setSubmit({
+                    type: "sucesso",
+                    msg: resposta,
+                  });
+                },
+                (error) => {
+                  resetForm(form);
+                  setSubmit({
+                    type: "falha",
+                    msg: error,
+                  });
+                  console.log("Error");
+                  console.log(error);
                 }
-                submitting={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <IconWrapper Icon={CgSpinnerTwo} spinner={true} />
-                ) : (
-                  "Enviar"
-                )}
-              </Button>
-            </Bottom>
-          </Container>
-        )}
-      </Formik>
-    </>
+              )
+              .then((data) => {
+                console.log(data);
+              });
+          }}
+        >
+          <Alert
+            variant="info"
+            setClose={() => setSubmit({ type: "", msg: "" })}
+            open={submit.type !== "" && submit.type === "sucesso"}
+          >
+            <IconWrapper Icon={IoMdCheckmarkCircleOutline} />
+            <span>Mensagem enviada com sucesso.</span>
+          </Alert>
+          <Alert
+            variant="danger"
+            setClose={() => setSubmit({ type: "", msg: "" })}
+            open={submit.type !== "" && submit.type === "falha"}
+          >
+            <IconWrapper Icon={IoMdAlert} />
+            <span>Algo deu errado</span>
+          </Alert>
+          <InputWraper error={errors.nome && touched.nome}>
+            <Label htmlFor="nome">Nome</Label>
+            <Input
+              type="text"
+              name="nome"
+              id="nome"
+              disabled={isSubmitting}
+              placeholder="Nome"
+            />
+            <ErrorMsg name="nome" component="div" />
+          </InputWraper>
+          <InputWraper error={errors.email && touched.email}>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              type="email"
+              name="email"
+              id="email"
+              disabled={isSubmitting}
+              placeholder="Email"
+            />
+            <ErrorMsg name="email" component="div" />
+          </InputWraper>
+          <InputWraper error={errors.assunto && touched.assunto}>
+            <Label htmlFor="assunto">Assunto</Label>
+            <Input
+              type="text"
+              name="assunto"
+              id="assunto"
+              disabled={isSubmitting}
+              placeholder="Assunto"
+            />
+            <ErrorMsg name="assunto" component="div" />
+          </InputWraper>
+          <InputWraper error={errors.mensagem && touched.mensagem}>
+            <Label htmlFor="mensagem">Mensagem</Label>
+            <Input
+              component="textarea"
+              type="textarea"
+              name="mensagem"
+              id="mensagem"
+              disabled={isSubmitting}
+              placeholder="Mensagem"
+              rows="6"
+            />
+            <ErrorMsg name="mensagem" component="div" />
+          </InputWraper>
+          <Bottom>
+            <Button
+              outline
+              type="reset"
+              disabled={isSubmitting}
+              submitting={isSubmitting}
+            >
+              {isSubmitting && <IconWrapper Icon={CgBlock} />} Limpar
+            </Button>
+            <Button
+              type="submit"
+              disabled={
+                isSubmitting ||
+                !(
+                  errors &&
+                  Object.keys(errors).length === 0 &&
+                  errors.constructor === Object
+                )
+              }
+              submitting={isSubmitting}
+            >
+              {isSubmitting ? (
+                <IconWrapper Icon={CgSpinnerTwo} spinner={true} />
+              ) : (
+                "Enviar"
+              )}
+            </Button>
+          </Bottom>
+        </Container>
+      )}
+    </Formik>
   );
 };
 
 export default Formulario;
-/**
- * 
-      <Input
-        id={label}
-        name={label}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
- */

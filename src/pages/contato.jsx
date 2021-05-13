@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Layout from "@layout/main";
 import InfoBox from "@components/InfoBox";
-import Form from "@components/Form";
+import Formulario from "@components/Formulario";
 
 import { ImLocation } from "@react-icons/all-files/im/ImLocation";
 import { ImShare2 } from "@react-icons/all-files/im/ImShare2";
@@ -18,7 +18,7 @@ const Grid = styled.div`
   height: 100%;
 `;
 
-const FormContainer = styled(Form)`
+const FormContainer = styled(Formulario)`
   grid-row: span 5;
   flex: 1;
 `;
