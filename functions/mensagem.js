@@ -1,7 +1,6 @@
-import { SiteClient } from "datocms-client";
-const datoAPI = process.env.DATO_API_TOKEN;
-
 exports.handler = async function (event, context) {
+  const { SiteClient } = required("datocms-client");
+  const datoAPI = process.env.DATO_API_TOKEN;
   const { body } = event;
   const formulario = JSON.parse(body);
   if (!datoAPI) {
