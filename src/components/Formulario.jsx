@@ -253,11 +253,9 @@ const Formulario = (props) => {
     >
       {({ isSubmitting, errors, touched }) => (
         <Container
-          id="myForm"
           data-netlify="true"
           name="contato"
           method="POST"
-          action="/.netlify/functions/form-handler"
         >
           <Alert
             variant="info"
