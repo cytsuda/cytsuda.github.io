@@ -218,9 +218,11 @@ const Formulario = (props) => {
         return errors;
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        fetch("/.netlify/functions/mensagem", {
+        const bodyInfo = new URLSearchParams(values).toString();
+        fetch("/", {
           method: "post",
-          body: JSON.stringify({ values }),
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: bodyInfo,
         }).then(
           (resposta) => {
             resetForm(form);
@@ -251,6 +253,7 @@ const Formulario = (props) => {
     >
       {({ isSubmitting, errors, touched }) => (
         <Container
+          id="myForm"
           data-netlify="true"
           name="contato"
           method="POST"
