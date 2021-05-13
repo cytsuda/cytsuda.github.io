@@ -218,7 +218,7 @@ const Formulario = (props) => {
         return errors;
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        fetch("/.netlify/functions/form-handler", {
+        fetch("/.netlify/functions/mensagem", {
           method: "post",
           body: JSON.stringify({ values }),
         }).then(

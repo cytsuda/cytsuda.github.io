@@ -97,8 +97,3 @@ const Header = (props) => {
 };
 
 export default Header;
-/*
-<Box px={[3, 5]} py={4}>
-  <Image src={Logo} alt="Gatsbygram Logo" height={48} />
-</Box>
-*/
