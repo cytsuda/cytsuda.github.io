@@ -196,7 +196,6 @@ const Formulario = (props) => {
   const { form } = props;
   return (
     <Formik
-      initialValues={form}
       validate={(values) => {
         const errors = {};
         if (!values.nome) {
@@ -217,46 +216,9 @@ const Formulario = (props) => {
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
-        const bodyInfo = new URLSearchParams(values).toString();
-        fetch("/", {
-          method: "post",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: bodyInfo,
-        }).then(
-          (resposta) => {
-            resetForm(form);
-            if (resposta.status !== 200) {
-              setSubmit({
-                type: "falha",
-                msg: resposta,
-              });
-              console.log(resposta);
-            } else {
-              setSubmit({
-                type: "sucesso",
-                msg: resposta,
-              });
-            }
-          },
-          (error) => {
-            resetForm(form);
-            setSubmit({
-              type: "falha",
-              msg: error,
-            });
-            console.log("Error");
-            console.log(error);
-          }
-        );
-      }}
     >
       {({ isSubmitting, errors, touched }) => (
-        <Container
-          data-netlify="true"
-          name="contato"
-          method="POST"
-        >
+        <Container data-netlify="true" name="contato" method="POST">
           <Alert
             variant="info"
             setClose={() => setSubmit({ type: "", msg: "" })}
@@ -273,6 +235,7 @@ const Formulario = (props) => {
             <IconWrapper Icon={IoMdAlert} />
             <span>Algo deu errado</span>
           </Alert>
+
           <InputWraper error={errors.nome && touched.nome}>
             <Label htmlFor="nome">Nome</Label>
             <Input
@@ -295,6 +258,7 @@ const Formulario = (props) => {
             />
             <ErrorMsg name="email" component="div" />
           </InputWraper>
+
           <InputWraper error={errors.assunto && touched.assunto}>
             <Label htmlFor="assunto">Assunto</Label>
             <Input
