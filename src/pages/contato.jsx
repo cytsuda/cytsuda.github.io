@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Layout from "@layout/main";
 import InfoBox from "@components/InfoBox";
 import Formulario from "@components/Formulario";
+import SocialMedia from "@components/SocialMedia";
 
 import { ImLocation } from "@react-icons/all-files/im/ImLocation";
 import { ImShare2 } from "@react-icons/all-files/im/ImShare2";
@@ -50,7 +51,7 @@ const information = [
   {
     icon: <ImShare2 />,
     title: "Social Media",
-    text: "Social Media component",
+    text: <SocialMedia />,
   },
   {
     icon: <HiOutlineMail />,

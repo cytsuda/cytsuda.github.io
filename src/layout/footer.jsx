@@ -3,22 +3,48 @@ import { Flex } from "rebass";
 
 import styled from "styled-components";
 
-
 const Main = styled(Flex)`
-  background-color: ${(props) => props.theme.colors.backgroundComp};
+  background-color: transparent;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 60px;
 `;
 
-const Container = styled(Flex)``;
+const Container = styled(Flex)`
+  font-family: ${(props) => props.theme.fonts.text};
+  width: 100em;
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  color: ${(props) => props.theme.colors.primary[800]};
+  transition: all 0.2s linear;
+  &:hover {
+    color: ${(props) => props.theme.colors.primary[400]};
+  }
+  &:visted {
+    color: ${(props) => props.theme.colors.primary[700]};
+  }
+`;
+
+const Text = styled.p`
+  font-size: ${(props) => props.theme.fontSizes[0]};
+  color: ${(props) => props.theme.colors.dark[400]};
+`;
 
 const Footer = ({ fixed = false }) => {
   return (
-    <Main py={3} fixed={fixed}>
-      <Container>
-        <p>Footer</p>
+    <Main pb={3} fixed={fixed}>
+      <Container flexDirection="column" alignItems="end">
+        <Text>Tsuda © {new Date().getFullYear()}</Text>
+        <Text>
+          Criado em{" "}
+          <Link href="https://www.gatsbyjs.com/" target="_blank">
+            Gatsby
+          </Link>
+          ,<Link href="https://www.datocms.com/">Dato CMS</Link> &
+          <Link href="https://www.netlify.com/">Netlify</Link>
+        </Text>
       </Container>
     </Main>
   );

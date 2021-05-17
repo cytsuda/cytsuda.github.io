@@ -87,7 +87,7 @@ const PTitle = styled.h1`
   font-size: ${(props) => props.theme.fontSizes[6]};
   font-family: ${(props) => props.theme.fonts.serif};
   letter-spacing: 2px;
-  color: ${(props) => props.theme.colors.font.title};
+  color: ${(props) => props.theme.colors.primary[500]};
   margin-bottom: ${(props) => props.theme.space[2]}px;
 `;
 const PSubtitle = styled.p`

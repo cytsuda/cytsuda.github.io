@@ -29,7 +29,7 @@ const Title = styled.h3`
   color: ${(props) => props.theme.colors.dark[400]};
   font-weight: 600;
 `;
-const Text = styled.p`
+const Text = styled.div`
   font-size: ${(props) => props.theme.fontSizes[2]};
   font-family: ${props=>props.theme.fonts.text};
   line-heigth: auto;

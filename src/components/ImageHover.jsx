@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { rgba } from "polished";
 import { Box } from "rebass";
 import TransitionLink from "gatsby-plugin-transition-link";
@@ -72,28 +72,27 @@ const Categories = styled.div`
   margin-bottom: ${(props) => props.theme.space[2]}px;
 `;
 
-
-const Link = styled(TransitionLink)`
-  color: inherit;
-`;
-const ExternalLink = styled.a`
-  color: inherit;
-`;
-
 const Links = styled.div`
   display: flex;
   grid-gap: ${(props) => props.theme.space[4]}px;
+`;
 
-  & ${Link} {
-    font-size: ${(props) => props.theme.fontSizes[5]};
-    transition: all 0.2s ease-in-out;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-  }
-  & ${Link}:hover {
+const LinkStyles = css`
+  font-size: ${(props) => props.theme.fontSizes[5]};
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  &:hover {
     color: ${(props) => props.theme.colors.primary[500]};
   }
+`;
+
+const Link = styled(TransitionLink)`
+  ${LinkStyles}
+`;
+const ExternalLink = styled.a`
+  ${LinkStyles}
 `;
 
 const ImageHover = (props) => {

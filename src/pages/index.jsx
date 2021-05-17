@@ -1,66 +1,86 @@
 import React from "react";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import { graphql } from "gatsby";
-import { Box } from "rebass";
 import styled from "styled-components";
-import TransitionLink from "gatsby-plugin-transition-link";
+import { rgba } from "polished";
 
 import Layout from "@layout/main";
+import SocialMedia from "@components/SocialMedia";
+import NavLinks from "@components/NavLinks";
+import Diamonds from "@images/diamonds.svg";
+import LogoSvg from "@images/logo_alt.svg";
 
-const Grid = styled(Box)`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: ${(props) => props.theme.space[3]}px;
+const bg = 900;
+const Container = styled.div`
+  margin: auto;
+  width: 66%;
+  height: 66vh;
+  background-color: ${(props) => props.theme.colors.dark[bg]};
+  padding: ${(props) => props.theme.space[5]}px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  border-radius: ${(props) => props.theme.space[1]}px;
+  overflow: hidden;
+  box-shadow: 1rem 1rem 2rem
+    ${(props) => rgba(props.theme.colors.dark[800], 0.2)};
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    width: 10%;
+    height: 100%;
+    background: url(${Diamonds});
+    background-color: ${(props) => props.theme.colors.dark[bg]};
+  }
+  &:after {
+    top: 0;
+    left: 0;
+    border-right: 2px solid ${(props) => props.theme.colors.dark[800]};
+  }
+  &:before {
+    top: 0;
+    right: 0;
+    border-left: 2px solid ${(props) => props.theme.colors.dark[800]};
+  }
 `;
 
-const NavLinks = styled(TransitionLink)`
-  text-decoration: none;
-  color: inherit;
+const Title = styled.h1`
+  font-size: 6rem;
+  font-family: ${(props) => props.theme.fonts.text};
+  margin-bottom: ${(props) => props.theme.space[3]}px;
+  color: ${(props) => props.theme.colors.dark[400]};
+  font-weight: 200;
+  text-transform: uppercase;
 `;
 
-const ProjectGridItem = ({ project }) => {
-  const image = getImage(project.featuredphoto);
-  return (
-    <NavLinks to={`/projects/${project.slug}`}>
-      <Box>
-        <GatsbyImage
-          image={image}
-          alt={project.slug + "-featuredphoto"}
-          objectFit="cover"
-        />
-      </Box>
-    </NavLinks>
-  );
-};
+const Subtitle = styled.p`
+  font-size: ${(props) => props.theme.fontSizes[5]};
+  font-family: ${(props) => props.theme.fonts.text};
+  margin-bottom: ${(props) => props.theme.space[5]}px;
+  font-weight: 200;
+  color: ${(props) => props.theme.colors.dark[600]};
+`;
 
-const Home = ({ data, location }) => {
-  const projects = data.projects.edges;
+const Logo = styled.img`
+  width: 15%;
+  margin-bottom: ${(props) => props.theme.space[4]}px;
+`;
+
+const Home = () => {
   return (
-    <Layout location={location}>
-      Home Page
-      <Grid>
-        {projects.map((project) => (
-          <ProjectGridItem key={project.node.title} project={project.node} />
-        ))}
-      </Grid>
+    <Layout type="home">
+      <Container>
+        <Logo src={LogoSvg} alt="Logo" />
+        <Title>Yoshio Tsuda</Title>
+        <Subtitle>Desenvolvedor Front-end / Desenvolvedor Javascript</Subtitle>
+        <NavLinks gap={6} mb={4} />
+        <SocialMedia circle />
+      </Container>
     </Layout>
   );
 };
-
-export const query = graphql`
-  {
-    projects: allDatoCmsProject {
-      edges {
-        node {
-          title
-          slug
-          featuredphoto {
-            gatsbyImageData(placeholder: BLURRED, aspectRatio: 1.6)
-          }
-        }
-      }
-    }
-  }
-`;
 
 export default Home;

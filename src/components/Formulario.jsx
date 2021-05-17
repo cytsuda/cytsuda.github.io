@@ -193,7 +193,6 @@ const IconWrapper = styled(IconStyle)`
 
 const Formulario = (props) => {
   const [submit, setSubmit] = useState({ type: "", msg: "" });
-  const [testing, setTesting] = useState("");
   const { form } = props;
   return (
     <Formik
@@ -253,7 +252,6 @@ const Formulario = (props) => {
       {({ isSubmitting, errors, touched }) => (
         <Container data-netlify="true" name="contato" method="post">
           <input type="hidden" name="form-name" value="contato" />
-          <h1>Testing: {` > ` + testing + ` < `} </h1>
           <Alert
             variant="info"
             setClose={() => setSubmit({ type: "", msg: "" })}
