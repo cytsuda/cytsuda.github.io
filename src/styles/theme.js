@@ -6,8 +6,8 @@ const theme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   colors: {
     ...colors,
-    backgroundComp: rgba(colors.dark[900], 0.95),
-    backgroundBody: rgba(colors.dark[900], 0.95),
+    backgroundComp: rgba(colors.dark[900], 0.5),
+    backgroundBody: rgba(colors.dark[900], 0.5),
     backgroundInt: rgba(colors.dark[600], 0.4),
     background: colors.dark[700],
   },
