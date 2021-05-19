@@ -1,11 +1,8 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled, { css } from "styled-components";
 import { Flex } from "rebass";
 import TransitionLink from "gatsby-plugin-transition-link";
-
-const Container = styled(Flex)`
-  grid-gap: ${(props) => props.theme.fontSizes[props.gap]};
-`;
+import { Transition } from "react-transition-group";
 
 const Link = styled(TransitionLink)`
   text-decoration: none;
@@ -39,20 +36,127 @@ const Link = styled(TransitionLink)`
   }
 `;
 
-const NavLinks = ({ gap = 6, mb=0}) => {
+const mobileMenuStyle = css`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s linear;
+  background-color: ${(props) => props.theme.colors.dark[900]};
+  z-index: ${(props) => props.theme.zIndex.nav};
+  right: 0;
+`;
+
+const Container = styled(Flex)`
+  grid-gap: ${(props) => props.theme.fontSizes[props.gap]};
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    ${mobileMenuStyle}
+    ${(props) =>
+      props.state === "entering" &&
+      css`
+        top: 0;
+        opacity: 1;
+      `}
+    ${(props) =>
+      props.state === "entered" &&
+      css`
+        top: 0;
+        opacity: 1;
+      `}
+    ${(props) =>
+      props.state === "exiting" &&
+      css`
+        top: 100%;
+        opacity: 0;
+      `}
+    ${(props) =>
+      props.state === "exited" &&
+      css`
+        top: -100%;
+        opacity: 0;
+      `}
+  }
+`;
+const NavButton = styled.div`
+  position: fixed;
+  width: 30px;
+  top: 15px;
+  right: 15px;
+  display: none;
+  z-index: ${(props) => props.theme.zIndex.nav + 1};
+  &::after,
+  &::before,
+  & div {
+    background: ${(props) => props.theme.colors.dark[100]};
+    content: "";
+    display: block;
+    height: 4px;
+    border-radius: 3px;
+    margin: 4px 0;
+    transition: 0.5s;
+  }
+  ${(props) =>
+    props.open &&
+    css`
+      &:before {
+        transform: translateY(8px) rotate(135deg);
+      }
+    `}
+  ${(props) =>
+    props.open &&
+    css`
+      &:after {
+        transform: translateY(-8px) rotate(-135deg);
+      }
+    `}
+  ${(props) =>
+    props.open &&
+    css`
+      & div {
+        transform: scale(0);
+      }
+    `}
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    display: block;
+  }
+`;
+
+const NavLinks = ({ gap = 6, mb = 0 }) => {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      document.body.setAttribute("style", `overflow:hidden`);
+    } else {
+      document.body.setAttribute("style", ``);
+    }
+  }, [open]);
+
   return (
-    <Container flexDirection="row" gap={gap} mb={mb}>
-      {menu.map((item, index) => (
-        <Link
-          to={item.path}
-          key={index}
-          activeClassName="active"
-          partiallyActive={item.text === "Home" ? false : true}
-        >
-          {item.text}
-        </Link>
-      ))}
-    </Container>
+    <Transition in={open} timeout={250}>
+      {(state) => (
+        <>
+          <NavButton open={open} onTouchStart={() => setOpen((prev) => !prev)}>
+            <div />
+          </NavButton>
+
+          <Container state={state} gap={gap} mb={mb}>
+            {menu.map((item, index) => (
+              <Link
+                to={item.path}
+                key={index}
+                activeClassName="active"
+                partiallyActive={item.text === "Home" ? false : true}
+              >
+                {item.text}
+              </Link>
+            ))}
+          </Container>
+        </>
+      )}
+    </Transition>
   );
 };
 

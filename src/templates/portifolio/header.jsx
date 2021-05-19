@@ -11,6 +11,10 @@ import Tag from "@components/Tag";
 
 const Container = styled(Flex)`
   grid-gap: ${(props) => props.theme.space[4]}px;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    grid-gap: -${(props) => props.theme.space[0]}px;
+    flex-direction: column;
+  }
 `;
 
 const Title = styled(Heading)`
@@ -20,8 +24,13 @@ const Title = styled(Heading)`
   font-size: ${(props) => props.theme.fontSizes[7]};
   margin: 0;
 
-  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
-    font-size: ${(props) => props.theme.fontSizes[7]};
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    background: ${(props) => props.theme.colors.backgroundComp};
+    display: inline-block;
+    width: auto;
+    align-self: flex-start;
+    padding-top: ${(props) => props.theme.space[2]}px;
+    padding-right: ${(props) => props.theme.space[4]}px;
   }
 `;
 
@@ -45,10 +54,18 @@ const Hero = ({ photo, truncated }) => {
 
 const InfoBox = styled(Flex)`
   flex: 1;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    margin-top: -${(props) => props.theme.space[4]}px !important;
+    z-index: 1;
+    width: 100% !important;
+  }
 `;
 
 const WrapImage = styled(GatsbyImage)`
   width: 100%;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    max-height: 250px;
+  }
 `;
 
 const Subtitle = styled(Text)`
@@ -71,10 +88,6 @@ const Description = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes[3]}px;
   line-height: 1.5;
   margin: 0;
-
-  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
-    font-size: ${(props) => props.theme.fontSizes[4]}px;
-  }
 `;
 
 const Links = styled.div`
@@ -82,6 +95,14 @@ const Links = styled.div`
   display: flex;
   margin-top: auto;
   margin-bottom: auto;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    margin-top: ${(props) => props.theme.space[4]}px;
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    flex-direction: column;
+  }
 `;
 
 const Link = styled.a`
@@ -156,19 +177,3 @@ const ProjectHeader = ({ project, truncated }) => {
 };
 
 export default ProjectHeader;
-/*
-<Flex flexWrap="wrap">
-        <Box width={[1, 1 / 2]}>
-          <Title as="h1">{project.title}</Title>
-          <Box mt={3}>
-            <Category as="h3">{project.subtitle}</Category>
-          </Box>
-        </Box>
-        <Box width={[1, 1 / 2]}>
-          <Box mt={[3, 0]}>
-            <Description as="h2">{project.description}</Description>
-          </Box>
-        </Box>
-      </Flex>
-
-*/

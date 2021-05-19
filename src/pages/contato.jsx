@@ -17,6 +17,9 @@ const Grid = styled.div`
   grid-gap: ${(props) => props.theme.space[3]}px;
   margin-bottom: ${(props) => props.theme.space[3]}px;
   height: 100%;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const FormContainer = styled(Formulario)`

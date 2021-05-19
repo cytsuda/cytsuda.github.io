@@ -60,7 +60,7 @@ const CloseIcon = styled(AiOutlineClose)`
   color: ${(props) => props.theme.colors.dark[300]};
   background-color: ${(props) => rgba(props.theme.colors.dark[500], 0.9)};
   font-size: ${(props) => props.theme.fontSizes[7]};
-  padding: ${(props) => props.theme.fontSizes[1]};
+  padding: ${(props) => props.theme.space[2]}px;
   border-radius: 50%;
   top: -${(props) => props.theme.fontSizes[7]};
   right: -${(props) => props.theme.fontSizes[7]};

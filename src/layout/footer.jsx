@@ -1,18 +1,26 @@
 import React from "react";
 import { Flex } from "rebass";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Main = styled(Flex)`
   background-color: transparent;
   justify-content: center;
   align-items: center;
   width: 100%;
+  ${(props) =>
+    props.fixed &&
+    css`
+      z-index: 1;
+      position: fixed;
+      bottom: 0;
+      left: -10%; 
+    `}
 `;
 
 const Container = styled(Flex)`
   font-family: ${(props) => props.theme.fonts.text};
-  width: 100em;
+  width: ${(props) => props.theme.breakpoints.xl};
 `;
 
 const Link = styled.a`
@@ -34,8 +42,8 @@ const Text = styled.p`
 
 const Footer = ({ fixed = false }) => {
   return (
-    <Main pb={3} fixed={fixed}>
-      <Container flexDirection="column" alignItems="end">
+    <Main pb={3} px={3} fixed={fixed}>
+      <Container flexDirection="column" alignItems="flex-end">
         <Text>Tsuda © {new Date().getFullYear()}</Text>
         <Text>
           Criado em{" "}

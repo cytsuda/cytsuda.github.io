@@ -9,10 +9,12 @@ import Diamonds from "@images/diamonds.svg";
 import LogoSvg from "@images/logo_alt.svg";
 
 const bg = 900;
+
 const Container = styled.div`
   margin: auto;
-  width: 66%;
-  height: 66vh;
+  max-width: 1200px;
+  width: 100%;
+  height: 80vh;
   background-color: ${(props) => props.theme.colors.dark[bg]};
   padding: ${(props) => props.theme.space[5]}px;
   display: flex;
@@ -45,6 +47,12 @@ const Container = styled.div`
     right: 0;
     border-left: 2px solid ${(props) => props.theme.colors.dark[800]};
   }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    min-height: 100vh;
+    height: auto;
+    overflow: auto;
+    padding: ${(props) => props.theme.space[3]}px;
+  }
 `;
 
 const Title = styled.h1`
@@ -54,6 +62,11 @@ const Title = styled.h1`
   color: ${(props) => props.theme.colors.dark[400]};
   font-weight: 200;
   text-transform: uppercase;
+  max-width: 80%;
+  text-align: center;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    font-size: ${(props) => props.theme.fontSizes[7]};
+  }
 `;
 
 const Subtitle = styled.p`
@@ -62,11 +75,21 @@ const Subtitle = styled.p`
   margin-bottom: ${(props) => props.theme.space[5]}px;
   font-weight: 200;
   color: ${(props) => props.theme.colors.dark[600]};
+  max-width: 80%;
+  text-align: center;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    max-width: 75%;
+    font-size: ${(props) => props.theme.fontSizes[3]};
+  }
 `;
 
 const Logo = styled.img`
   width: 15%;
   margin-bottom: ${(props) => props.theme.space[4]}px;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    width: 25%;
+  }
 `;
 
 const Home = () => {

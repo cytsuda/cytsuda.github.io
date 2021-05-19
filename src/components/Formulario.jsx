@@ -13,6 +13,9 @@ import { IoMdAlert } from "@react-icons/all-files/io/IoMdAlert";
 const Container = styled(Form)`
   padding: ${(props) => props.theme.space[4]}px;
   background-color: ${(props) => props.theme.colors.backgroundInt};
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    padding: ${(props) => props.theme.space[3]}px;
+  }
 `;
 
 const Input = styled(Field)`

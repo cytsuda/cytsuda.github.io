@@ -7,7 +7,7 @@ import Modal from "@components/Modal";
 
 const Grid = styled(Box)`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
   grid-gap: ${(props) => props.theme.space[4]}px;
 `;
 

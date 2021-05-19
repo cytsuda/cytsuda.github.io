@@ -27,9 +27,17 @@ import styled from "styled-components";
 
 const PersonalSection = styled.section`
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: minmax(350px, 1fr) 3fr;
   grid-gap: ${(props) => props.theme.space[2]}px;
   margin-bottom: ${(props) => props.theme.space[4]}px;
+  max-width: 100%;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+  }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    max-width: 100%;
+    overflow: hidden;
+  }
 `;
 
 const SkillSection = styled.section`
@@ -38,6 +46,13 @@ const SkillSection = styled.section`
   grid-gap: ${(props) => props.theme.space[3]}px;
   margin-top: ${(props) => props.theme.space[3]}px;
   margin-bottom: ${(props) => props.theme.space[4]}px;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    margin-bottom: ${(props) => props.theme.space[0]}px;
+  }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    grid-gap: ${(props) => props.theme.space[2]}px;
+  }
 `;
 
 const SkillItem = styled.div`
@@ -56,6 +71,23 @@ const SkillItem = styled.div`
   & p {
     font-size: ${(props) => props.theme.fontSizes[3]};
     font-family: ${(props) => props.theme.fonts.text};
+    @media only screen and (max-width: ${(props) =>
+        props.theme.breakpoints.md}) {
+      font-size: ${(props) => props.theme.fontSizes[2]};
+    }
+  }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    grid-column: span 4;
+  }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    grid-column: span 6;
+  }
+  @media only screen and (max-width: ${(props) =>
+      props.theme.breakpoints.xxs}) {
+    grid-column: span 12;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: ${(props) => props.theme.space[3]}px;
   }
 `;
 
@@ -75,6 +107,30 @@ const HoobyItem = styled.div`
     font-size: ${(props) => props.theme.fontSizes[3]};
     font-family: ${(props) => props.theme.fonts.text};
     font-weight: 700;
+    @media only screen and (max-width: ${(props) =>
+        props.theme.breakpoints.md}) {
+      font-size: ${(props) => props.theme.fontSizes[2]};
+    }
+    @media only screen and (max-width: ${(props) =>
+        props.theme.breakpoints.sm}) {
+      font-size: ${(props) => props.theme.fontSizes[1]};
+      text-align: center;
+    }
+    @media only screen and (max-width: ${(props) =>
+        props.theme.breakpoints.xxs}) {
+      text-align: left;
+    }
+  }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    grid-column: span 6;
+  }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    flex-direction: column;
+  }
+  @media only screen and (max-width: ${(props) =>
+      props.theme.breakpoints.xxs}) {
+    flex-direction: row;
+    grid-column: span 12;
   }
 `;
 
@@ -89,6 +145,9 @@ const PTitle = styled.h1`
   letter-spacing: 2px;
   color: ${(props) => props.theme.colors.primary[500]};
   margin-bottom: ${(props) => props.theme.space[2]}px;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    font-size: ${(props) => props.theme.fontSizes[5]};
+  }
 `;
 const PSubtitle = styled.p`
   font-size: ${(props) => props.theme.fontSizes[2]};
@@ -99,7 +158,7 @@ const PSubtitle = styled.p`
 const List = styled.ul`
   display: grid;
   list-style: none;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
   grid-gap: ${(props) => props.theme.space[3]}px;
   margin-bottom: ${(props) => props.theme.space[4]}px;
 `;

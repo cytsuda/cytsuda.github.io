@@ -20,7 +20,7 @@ const Hover = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  grid-gap: 16px;
+  grid-gap: ${(props) => props.theme.space[3]}px;
   opacity: 0;
   visibility: hidden;
   transform: scale(0.9);
@@ -44,6 +44,14 @@ const Hover = styled.div`
     border-right: 3px solid ${(props) => props.theme.colors.dark[200]};
     border-bottom: 3px solid ${(props) => props.theme.colors.dark[200]};
   }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    grid-gap: ${(props) => props.theme.space[2]}px;
+    &,
+    &::after,
+    &::before {
+      border-width: 2px;
+    }
+  }
 `;
 
 const Container = styled(Box)`
@@ -56,9 +64,14 @@ const Container = styled(Box)`
     visibility: visible;
     transform: scale(1);
   }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    border-width: 2px;
+  }
 `;
 
-const ImageBox = styled(GatsbyImage)``;
+const ImageBox = styled(GatsbyImage)`
+  height: 100%;
+`;
 
 const Title = styled.h4`
   font-family: ${(props) => props.theme.fonts.serif};

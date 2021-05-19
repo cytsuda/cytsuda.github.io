@@ -13,6 +13,12 @@ const Container = styled.div`
   color: ${(props) => props.theme.colors.dark[100]};
   grid-gap: ${(props) => props.theme.space[3]}px;
   padding: ${(props) => props.theme.space[1]}px 0;
+  ${props => props.circle && css`
+    @media only screen and (max-width: ${(props) =>
+        props.theme.breakpoints.xxs}) {
+      grid-gap: ${(props) => props.theme.space[2]}px;
+    }
+  `}
 `;
 
 const IconWrapper = styled.a`
@@ -47,7 +53,7 @@ const IconWrapper = styled.a`
 
 const SocialMedia = ({ circle = 0 }) => {
   return (
-    <Container>
+    <Container circle={circle}>
       <IconWrapper circle={circle} target="_blank" href="/">
         <ImBehance />
       </IconWrapper>

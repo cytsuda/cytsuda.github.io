@@ -24,7 +24,9 @@ const Main = styled(Box)`
 `;
 
 const Center = styled(Box)`
-  width: ${(props) => `calc(${props.theme.breakpoints[3]} + 2*${props.theme.space[4]}px)`};
+  max-width: ${(props) =>
+    `calc(${props.theme.breakpoints.xl} + 2*${props.theme.space[4]}px)`};
+  width: 100%;
   margin: ${(props) => props.theme.space[3] + 65}px auto
     ${(props) => props.theme.space[3]}px;
   background-color: ${(props) => props.theme.colors.backgroundBody};
@@ -33,6 +35,9 @@ const Center = styled(Box)`
   flex-direction: column;
   flex: 1 1 auto;
   border-radius: 5px;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}) {
+    padding: ${(props) => props.theme.space[3]}px;
+  }
 `;
 
 const Title = styled.h1`
@@ -43,6 +48,11 @@ const Title = styled.h1`
   margin-top: ${(props) => props.theme.space[2]}px;
   margin-bottom: ${(props) => props.theme.space[4]}px;
   text-transform: uppercase;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    margin-top: ${(props) => props.theme.space[1]}px;
+    margin-bottom: ${(props) => props.theme.space[3]}px;
+    font-size: ${(props) => props.theme.fontSizes[5]};
+  }
 `;
 
 const MainLayout = ({ children, location, title, type }) => {
@@ -54,7 +64,7 @@ const MainLayout = ({ children, location, title, type }) => {
       <ThemeProvider theme={theme}>
         <Main>
           {children}
-          <Footer />
+          <Footer fixed={true} />
         </Main>
       </ThemeProvider>
     );

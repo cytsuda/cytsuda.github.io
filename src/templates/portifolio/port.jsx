@@ -13,7 +13,7 @@ const ProjectInner = ({ transitionStatus, project, location }) => {
     <Layout
       state={transitionStatus}
       location={location}
-      title={"Portifolio Showcase: " + project.title}
+      title={"Showcase: " + project.title}
     >
       <ProjectHeader project={project} />
       <Line mt={5} mb={4}>

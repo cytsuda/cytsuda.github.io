@@ -7,9 +7,10 @@ import ImageHover from "@components/ImageHover";
 import Layout from "@layout/main";
 import Tag from "@components/Tag";
 
+// grid-template-columns: repeat(3, 1fr);
 const Grid = styled(Box)`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: ${(props) => props.theme.space[4]}px;
 `;
 
@@ -18,6 +19,7 @@ const Tags = styled.div`
   grid-gap: ${(props) => props.theme.space[2]}px;
   margin-bottom: ${(props) => props.theme.space[4]}px;
 `;
+
 const Projects = ({ data, location }) => {
   const projects = data.projects.edges;
   const categoriesSets = new Set();
