@@ -1,6 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { rgba } from "polished";
+import { Helmet } from "react-helmet";
 
 import Layout from "@layout/main";
 import SocialMedia from "@components/SocialMedia";
@@ -27,6 +28,9 @@ const Container = styled.div`
   overflow: hidden;
   box-shadow: 1rem 1rem 2rem
     ${(props) => rgba(props.theme.colors.dark[800], 0.2)};
+
+  transition: opacity 0.2s linear;
+
   &:before,
   &:after {
     content: "";
@@ -47,6 +51,28 @@ const Container = styled.div`
     right: 0;
     border-left: 2px solid ${(props) => props.theme.colors.dark[800]};
   }
+
+  ${(props) =>
+    props.state === "entering" &&
+    css`
+      opacity: 0;
+    `}
+  ${(props) =>
+    props.state === "entered" &&
+    css`
+      opacity: 1;
+    `}
+  ${(props) =>
+    props.state === "exiting" &&
+    css`
+      opacity: 0;
+    `}
+  ${(props) =>
+    props.state === "exited" &&
+    css`
+      opacity: 0;
+    `}
+  
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
     min-height: 100vh;
     height: auto;
@@ -92,9 +118,12 @@ const Logo = styled.img`
   }
 `;
 
-const Home = () => {
+const Home = ({ transitionStatus }) => {
   return (
-    <Layout type="home">
+    <Layout type="home" transitionStatus={transitionStatus}>
+      <Helmet>
+        <title>Yoshio Tsuda</title>
+      </Helmet>
       <Container>
         <Logo src={LogoSvg} alt="Logo" />
         <Title>Yoshio Tsuda</Title>

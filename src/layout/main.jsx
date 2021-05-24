@@ -1,6 +1,10 @@
 import React from "react";
-import styled, { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider, css, keyframes } from "styled-components";
+import { Helmet } from "react-helmet";
 import { Box } from "rebass";
+import { rgba } from "polished";
+
+import { CgSpinnerTwo } from "@react-icons/all-files/cg/CgSpinnerTwo";
 
 import "@styles/reset.css";
 import Line from "@components/Line";
@@ -35,7 +39,8 @@ const Center = styled(Box)`
   flex-direction: column;
   flex: 1 1 auto;
   border-radius: 5px;
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}) {
+  @media only screen and (max-width: ${(props) =>
+      props.theme.breakpoints.xxs}) {
     padding: ${(props) => props.theme.space[3]}px;
   }
 `;
@@ -55,33 +60,126 @@ const Title = styled.h1`
   }
 `;
 
-const MainLayout = ({ children, location, title, type }) => {
+const enter = keyframes`
+  0%{
+    top: 0;
+  }
+  100%{
+    top: -100%;
+  }
+`;
+const exit = keyframes`
+  0%{
+    top: 100%;
+  }
+  100%{
+    top: 0;
+  }
+`;
+
+const Animation = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => rgba(props.theme.colors.dark[900], 0.99)};
+  z-index: ${(props) => props.theme.zIndex.backdrop};
+
+  ${(props) =>
+    props.state === "entered" &&
+    css`
+      animation: ${enter} 0.2s linear;
+      top: 100%;
+    `}
+  ${(props) =>
+    props.state === "exiting" &&
+    css`
+      animation: ${exit} 0.2s linear;
+    `}
+`;
+
+const spinner = keyframes`
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+`;
+
+const Spinner = styled(CgSpinnerTwo)`
+  height: 70px;
+  width: 70px;
+  color: ${(props) => props.theme.colors.primary[500]};
+  animation: ${spinner} 0.6s ease-in-out infinite;
+`;
+
+const MetaComponent = (props) => {
+  const { local } = props;
+  return (
+    <Helmet>
+      <title>Yoshio Tsuda - {local}</title>
+
+      <meta charset="UTF-8" />
+      <meta
+        name="description"
+        content="Portifólio pessoa Carlos Yoshio Tsuda"
+      />
+      <meta
+        name="keywords"
+        content="Desenvolvedor, Programador, Portifólio, Front-end, Javascript"
+      />
+      <meta name="author" content="Carlos Yoshio Tsuda" />
+      <meta http-equiv="content-language" content="pt-br" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Helmet>
+  );
+};
+
+const MainLayout = ({ children, location, title, type, transitionStatus }) => {
   const local = location
     ? location.pathname.slice(1).replace("/", " / ")
     : "No text";
+
   if (type === "home") {
     return (
       <ThemeProvider theme={theme}>
-        <Main>
-          {children}
-          <Footer fixed={true} />
-        </Main>
+        <>
+          <MetaComponent local="Home" />
+          <Animation state={transitionStatus}>
+            <Spinner state={transitionStatus} />
+          </Animation>
+          <Main>
+            {children}
+            <Footer fixed={true} />
+          </Main>
+        </>
       </ThemeProvider>
     );
   }
   return (
     <ThemeProvider theme={theme}>
-      <Main>
-        <Header />
-        <Center as="main">
-          <Line my={0} right>
-            {local}
-          </Line>
-          {title && <Title>{title}</Title>}
-          {children}
-        </Center>
-        <Footer />
-      </Main>
+      <>
+        <MetaComponent local={local.charAt(0).toUpperCase() + local.slice(1)} />
+        <Animation state={transitionStatus}>
+          <Spinner state={transitionStatus} />
+        </Animation>
+        <Main>
+          <Header />
+          <Center as="main">
+            <Line my={0} right>
+              {local}
+            </Line>
+            {title && <Title>{title}</Title>}
+            {children}
+          </Center>
+          <Footer />
+        </Main>
+      </>
     </ThemeProvider>
   );
 };

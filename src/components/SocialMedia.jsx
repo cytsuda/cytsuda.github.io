@@ -6,7 +6,6 @@ import { ImBehance } from "@react-icons/all-files/im/ImBehance";
 import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { ImLinkedin2 } from "@react-icons/all-files/im/ImLinkedin2";
 import { FiDribbble } from "@react-icons/all-files/fi/FiDribbble";
-import { GrInstagram } from "@react-icons/all-files/gr/GrInstagram";
 
 const Container = styled.div`
   display: flex;
@@ -54,20 +53,17 @@ const IconWrapper = styled.a`
 const SocialMedia = ({ circle = 0 }) => {
   return (
     <Container circle={circle}>
-      <IconWrapper circle={circle} target="_blank" href="/">
+      <IconWrapper circle={circle} target="_blank" href="https://www.behance.net/cytsuda">
         <ImBehance />
       </IconWrapper>
-      <IconWrapper circle={circle} target="_blank" href="/">
+      <IconWrapper circle={circle} target="_blank" href="https://github.com/cytsuda">
         <ImGithub />
       </IconWrapper>
-      <IconWrapper circle={circle} target="_blank" href="/">
+      <IconWrapper circle={circle} target="_blank" href="https://dribbble.com/yoshiotsuda">
         <FiDribbble />
       </IconWrapper>
-      <IconWrapper circle={circle} target="_blank" href="/">
+      <IconWrapper circle={circle} target="_blank" href="https://www.linkedin.com/in/cytsuda/">
         <ImLinkedin2 />
-      </IconWrapper>
-      <IconWrapper circle={circle} target="_blank" href="/">
-        <GrInstagram />
       </IconWrapper>
     </Container>
   );

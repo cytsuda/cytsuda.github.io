@@ -8,10 +8,12 @@ import Line from "@components/Line";
 import ProjectHeader from "@templates/portifolio/header";
 import ProjectContent from "@templates/portifolio/content";
 
-const ProjectInner = ({ transitionStatus, project, location }) => {
+const ProjectInner = ({ state, project, location }) => {
+  console.log("project");
+  const { transitionStatus } = state;
   return (
     <Layout
-      state={transitionStatus}
+      transitionStatus={transitionStatus}
       location={location}
       title={"Showcase: " + project.title}
     >
@@ -24,7 +26,12 @@ const ProjectInner = ({ transitionStatus, project, location }) => {
   );
 };
 
-const Project = ({ pageContext: projectShell, data, location }) => {
+const Project = ({
+  pageContext: projectShell,
+  data,
+  location,
+  transitionStatus,
+}) => {
   const { next, project } = data;
   const wrapProject = {
     ...projectShell,
@@ -36,7 +43,7 @@ const Project = ({ pageContext: projectShell, data, location }) => {
       {(transitionStatus) => (
         <ProjectInner
           location={location}
-          transitionStatus={transitionStatus}
+          state={transitionStatus}
           project={wrapProject}
         />
       )}

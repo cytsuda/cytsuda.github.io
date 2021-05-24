@@ -9,7 +9,7 @@ import SocialMedia from "@components/SocialMedia";
 import { ImLocation } from "@react-icons/all-files/im/ImLocation";
 import { ImShare2 } from "@react-icons/all-files/im/ImShare2";
 import { HiOutlineMail } from "@react-icons/all-files/hi/HiOutlineMail";
-import { ImWhatsapp } from "@react-icons/all-files/im/ImWhatsapp";
+import { ImSkype } from "@react-icons/all-files/im/ImSkype";
 
 const Grid = styled.div`
   display: grid;
@@ -28,9 +28,9 @@ const FormContainer = styled(Formulario)`
 `;
 
 const Contato = (props) => {
-  const { location } = props;
+  const { location, transitionStatus } = props;
   return (
-    <Layout location={location} title="Find me">
+    <Layout location={location} title="Onde me encontrar" transitionStatus={transitionStatus}>
       <Grid>
         {information.map((item, index) => (
           <InfoBox icon={item.icon} title={item.title} key={index}>
@@ -59,12 +59,12 @@ const information = [
   {
     icon: <HiOutlineMail />,
     title: "Email",
-    text: "span_email",
+    text: "cytsuda@gmail.com",
   },
   {
-    icon: <ImWhatsapp />,
-    title: "Whatsapp",
-    text: "span_email",
+    icon: <ImSkype />,
+    title: "Skype",
+    text: "yoshiotsuda",
   },
 ];
 

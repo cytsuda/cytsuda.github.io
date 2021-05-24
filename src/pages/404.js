@@ -146,13 +146,13 @@ const LinkButton = styled(TransitionLink)`
 `;
 
 const NotFound = (props) => {
-  const { location } = props;
+  const { location,transitionStatus } = props;
   const local = { pathname: "/Erro 404" };
   const { data } = props;
   const projetos = data.allSitePage.edges;
   const pages = normalizeFunction(projetos);
   return (
-    <Layout location={local} title="Página não encontrada">
+    <Layout location={local} title="Página não encontrada" transitionStatus={transitionStatus}>
       <Container>
         <Image src={NotFoundImage} />
         <InfoBox>

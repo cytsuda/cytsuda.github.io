@@ -138,7 +138,11 @@ const NavLinks = ({ gap = 6, mb = 0 }) => {
     <Transition in={open} timeout={250}>
       {(state) => (
         <>
-          <NavButton open={open} onTouchStart={() => setOpen((prev) => !prev)}>
+          <NavButton
+            open={open}
+            onTouchStart={() => setOpen((prev) => !prev)}
+            onClick={() => setOpen((prev) => !prev)}
+          >
             <div />
           </NavButton>
 
@@ -149,6 +153,12 @@ const NavLinks = ({ gap = 6, mb = 0 }) => {
                 key={index}
                 activeClassName="active"
                 partiallyActive={item.text === "Home" ? false : true}
+                entry={{
+                  delay: 0.25,
+                }}
+                exit={{
+                  length: 0.25,
+                }}
               >
                 {item.text}
               </Link>

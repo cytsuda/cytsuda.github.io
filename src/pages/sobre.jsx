@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "rebass";
+import TransitionLink from "gatsby-plugin-transition-link";
 
 import { GoChevronRight } from "@react-icons/all-files/go/GoChevronRight";
 import { FaHtml5 } from "@react-icons/all-files/fa/FaHtml5";
@@ -27,7 +28,7 @@ import styled from "styled-components";
 
 const PersonalSection = styled.section`
   display: grid;
-  grid-template-columns: minmax(350px, 1fr) 3fr;
+  grid-template-columns: minmax(350px, 1fr) 2fr;
   grid-gap: ${(props) => props.theme.space[2]}px;
   margin-bottom: ${(props) => props.theme.space[4]}px;
   max-width: 100%;
@@ -174,6 +175,10 @@ const ListItemStyle = styled.li`
     margin-right: ${(props) => props.theme.space[2]}px;
     color: ${(props) => props.theme.colors.dark[100]};
   }
+  & a {
+    margin-right: ${(props) => props.theme.space[2]}px;
+    color: ${(props) => props.theme.colors.dark[100]};
+  }
 `;
 
 const Icon = styled(GoChevronRight)`
@@ -197,134 +202,62 @@ const Paragraph = styled.p`
   font-family: ${(props) => props.theme.fonts.text};
   line-height: 1.5;
 `;
-const About = ({ location }) => {
-  const skillItem = [
-    {
-      text: "HTML5",
-      icon: <FaHtml5 />,
-    },
-    {
-      text: "CSS3",
-      icon: <FaCss3 />,
-    },
-    {
-      text: "Javascript",
-      icon: <IoLogoJavascript />,
-    },
-    {
-      text: "Material-UI",
-      icon: <SiMaterialUi />,
-    },
-    {
-      text: "React",
-      icon: <FaReact />,
-    },
-    {
-      text: "NodeJS",
-      icon: <FaNodeJs />,
-    },
-    {
-      text: "MongoDB",
-      icon: <DiMongodb />,
-    },
-    {
-      text: "Python",
-      icon: <FaPython />,
-    },
-  ];
 
-  const listaInteresses = [
-    {
-      id: 1,
-      text: "Tecnologia Web",
-      icon: <BiCodeAlt />,
-      color: "#3498db",
-    },
-    {
-      id: 2,
-      text: "UI/UX Design",
-      icon: <BsLayoutWtf />,
-      color: "#9b59b6",
-    },
-    {
-      id: 3,
-      text: "Jogos & Game design",
-      icon: <BiGame />,
-      color: "#f1c40f",
-    },
-    {
-      id: 4,
-      text: "Ciência & Tecnologia",
-      icon: <SiAtom />,
-      color: "#22b8cf",
-    },
-    {
-      id: 5,
-      text: "Filmes & Series",
-      icon: <MdMovie />,
-      color: "#f03e3e",
-    },
-    {
-      id: 6,
-      text: "Artes & Ilustrações",
-      icon: <FaPaintBrush />,
-      color: "#fd7e14",
-    },
-    {
-      id: 7,
-      text: "Relações internacionais",
-      icon: <AiOutlineGlobal />,
-      color: "#e64980",
-    },
-    {
-      id: 8,
-      text: "Animações",
-      icon: <MdSlowMotionVideo />,
-      color: "#74c0fc",
-    },
-    {
-      id: 9,
-      text: "RPG & Board Games",
-      icon: <FaDice />,
-      color: "#40c057",
-    },
-  ];
+const About = ({ location, transitionStatus }) => {
   return (
-    <Layout location={location} title="Um pouco sobre mim">
+    <Layout
+      location={location}
+      title="Um pouco sobre mim"
+      transitionStatus={transitionStatus}
+    >
       <PersonalSection>
         <Place alt="image" />
         <PersonalInfo>
           <PersonalTitle>
             <PTitle>Desenvolvedor Fullstack javascript</PTitle>
-            <PSubtitle>Yeap Yeap test</PSubtitle>
+            <PSubtitle>
+              Eu sou um desenvolvedor Javascript e aficionado por UI/UX e design
+              em geral. Utilizo Node.js server-side e React como controlador de
+              interface.
+            </PSubtitle>
           </PersonalTitle>
           <List>
             <ListItem>
-              <span>Website:</span> www.example.com
+              <span>Website:</span>
+              <TransitionLink
+                to="/"
+                entry={{
+                  delay: 0.25,
+                }}
+                exit={{
+                  length: 0.25,
+                }}
+              >
+                https://cytsuda.netlify.app/
+              </TransitionLink>
             </ListItem>
             <ListItem>
-              <span>Website:</span> www.example.com
+              <span>Localização:</span> São José do Rio Preto, SP
             </ListItem>
             <ListItem>
-              <span>Website:</span> www.example.com
+              <span>Email:</span> cytsuda@gmail.com
             </ListItem>
             <ListItem>
-              <span>Website:</span> www.example.com
+              <span>Skype:</span> yoshiotsuda
             </ListItem>
             <ListItem>
-              <span>Website:</span> www.example.com
+              <span>Dribbble:</span> tsuda.space
             </ListItem>
             <ListItem>
-              <span>Website:</span> www.example.com
+              <span>Linkedin:</span> tsuda.space
             </ListItem>
           </List>
           <Paragraph>
-            Officiis eligendi itaque labore et dolorum mollitia officiis optio
-            vero. Quisquam sunt adipisci omnis et ut. Nulla accusantium dolor
-            incidunt officia tempore. Et eius omnis. Cupiditate ut dicta maxime
-            officiis quidem quia. Sed et consectetur qui quia repellendus itaque
-            neque. Aliquid amet quidem ut quaerat cupiditate. Ab et eum qui
-            repellendus omnis culpa magni laudantium dolores.
+            Identificar, pesquisar, resolver e implementar são o conjunto de
+            habilidades que um desenvolvedor possue. A linguagem que ele utiliza
+            é apenas uma ferramenta e, como todas ferramentas, ela possui
+            aplicações especificas. Node.js permite utilizar Javascript para
+            qualquer tipo de aplicação computacional.
           </Paragraph>
         </PersonalInfo>
       </PersonalSection>
@@ -351,3 +284,95 @@ const About = ({ location }) => {
 };
 
 export default About;
+
+const skillItem = [
+  {
+    text: "HTML5",
+    icon: <FaHtml5 />,
+  },
+  {
+    text: "CSS3",
+    icon: <FaCss3 />,
+  },
+  {
+    text: "Javascript",
+    icon: <IoLogoJavascript />,
+  },
+  {
+    text: "Material-UI",
+    icon: <SiMaterialUi />,
+  },
+  {
+    text: "React",
+    icon: <FaReact />,
+  },
+  {
+    text: "NodeJS",
+    icon: <FaNodeJs />,
+  },
+  {
+    text: "MongoDB",
+    icon: <DiMongodb />,
+  },
+  {
+    text: "Python",
+    icon: <FaPython />,
+  },
+];
+
+const listaInteresses = [
+  {
+    id: 1,
+    text: "Tecnologia Web",
+    icon: <BiCodeAlt />,
+    color: "#3498db",
+  },
+  {
+    id: 2,
+    text: "UI/UX Design",
+    icon: <BsLayoutWtf />,
+    color: "#9b59b6",
+  },
+  {
+    id: 3,
+    text: "Jogos & Game design",
+    icon: <BiGame />,
+    color: "#f1c40f",
+  },
+  {
+    id: 4,
+    text: "Ciência & Tecnologia",
+    icon: <SiAtom />,
+    color: "#22b8cf",
+  },
+  {
+    id: 5,
+    text: "Filmes & Series",
+    icon: <MdMovie />,
+    color: "#f03e3e",
+  },
+  {
+    id: 6,
+    text: "Artes & Ilustrações",
+    icon: <FaPaintBrush />,
+    color: "#fd7e14",
+  },
+  {
+    id: 7,
+    text: "Relações internacionais",
+    icon: <AiOutlineGlobal />,
+    color: "#e64980",
+  },
+  {
+    id: 8,
+    text: "Animações",
+    icon: <MdSlowMotionVideo />,
+    color: "#74c0fc",
+  },
+  {
+    id: 9,
+    text: "RPG & Board Games",
+    icon: <FaDice />,
+    color: "#40c057",
+  },
+];

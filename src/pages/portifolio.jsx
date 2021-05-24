@@ -20,7 +20,7 @@ const Tags = styled.div`
   margin-bottom: ${(props) => props.theme.space[4]}px;
 `;
 
-const Projects = ({ data, location }) => {
+const Projects = ({ data, location, transitionStatus }) => {
   const projects = data.projects.edges;
   const categoriesSets = new Set();
   projects.forEach((item) => {
@@ -30,7 +30,7 @@ const Projects = ({ data, location }) => {
   });
   const cat = Array.from(categoriesSets);
   return (
-    <Layout location={location} title="Check this shit!">
+    <Layout location={location} title="Portifólio & Labs" transitionStatus={transitionStatus}>
       <Tags>
         {cat.map((item) => (
           <Tag key={item}>{item}</Tag>
