@@ -52,6 +52,9 @@ const Hover = styled.div`
       border-width: 2px;
     }
   }
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}) {
+    grid-gap: ${(props) => props.theme.space[1]}px;
+  }
 `;
 
 const Container = styled(Box)`
@@ -77,12 +80,19 @@ const Title = styled.h4`
   font-family: ${(props) => props.theme.fonts.serif};
   font-size: ${(props) => props.theme.fontSizes[5]};
   margin-bottom: ${(props) => props.theme.space[2]}px;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    font-size: ${(props) => props.theme.fontSizes[4]};
+  }
 `;
 
 const Categories = styled.div`
   display: flex;
-  grid-gap: ${(props) => props.theme.space[3]}px;
+  flex-wrap: wrap;
+  grid-gap: ${(props) => props.theme.space[2]}px;
   margin-bottom: ${(props) => props.theme.space[2]}px;
+  max-width: 80%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Links = styled.div`

@@ -6,8 +6,7 @@ const Container = styled.span`
   font-sizes: ${(props) => props.theme.fontSizes[2]};
   background-color: ${(props) => props.theme.colors.dark[500]};
   color: ${(props) => props.theme.colors.dark[200]};
-  padding: ${(props) => props.theme.space[2]}px
-    ${(props) => props.theme.space[3]}px ${(props) => props.theme.space[1]}px;
+  padding: ${(props) => props.theme.space[2]}px ${(props) => props.theme.space[3]}px ${(props) => props.theme.space[1]}px;
   border-radius: 5px;
 `;
 
